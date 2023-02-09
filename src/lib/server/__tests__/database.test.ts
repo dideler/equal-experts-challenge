@@ -1,6 +1,11 @@
-import { describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
-describe.todo('getLists', () => {
-  it('returns an array')
-})
+import * as db from '$lib/server/database';
+
+describe('getLists', () => {
+	it('returns an array', async () => {
+		const res = await db.getLists();
+		expect(res).toBeInstanceOf(Array);
+	});
+});
 
