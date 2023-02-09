@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
+import type { List, Item } from '$lib/types';
 import * as db from '$lib/server/database';
 import { randomUUID } from 'crypto';
 
@@ -8,8 +9,8 @@ const newList = ({
 	items = [
 		{ done: false, desc: 'Eggs' },
 		{ done: true, desc: 'Ham' },
-	],
-} = {}) => {
+	] as Item[],
+} = {}): List => {
 	const currentTime = new Date().toISOString();
 	return {
 		id: randomUUID(),
