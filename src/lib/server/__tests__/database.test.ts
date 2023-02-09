@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 import type { List, Item } from '$lib/types';
 import * as db from '$lib/server/database';
@@ -20,6 +20,10 @@ const newList = ({
 		updated_at: currentTime,
 	};
 };
+
+beforeEach(() => {
+	db.reset();
+});
 
 describe('getLists', () => {
 	it('returns all stored lists', async () => {
