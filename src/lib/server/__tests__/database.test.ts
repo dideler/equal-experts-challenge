@@ -7,8 +7,8 @@ const newList = ({
 	title = 'Groceries',
 	items = [
 		{ done: false, desc: 'Eggs' },
-		{ done: true, desc: 'Ham' }
-	]
+		{ done: true, desc: 'Ham' },
+	],
 } = {}) => {
 	const currentTime = new Date().toISOString();
 	return {
@@ -16,7 +16,7 @@ const newList = ({
 		title,
 		items,
 		created_at: currentTime,
-		updated_at: currentTime
+		updated_at: currentTime,
 	};
 };
 
@@ -27,7 +27,7 @@ describe('getLists', () => {
 
 		db.reset({
 			[list1.id]: list1,
-			[list2.id]: list2
+			[list2.id]: list2,
 		});
 
 		const res = await db.getLists();

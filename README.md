@@ -43,6 +43,7 @@ The grocery list could have functionality like Google Keep where we can add line
 ## Description
 
 A basic branded grocery list app with the following functionality
+
 - create a list
 - view a list
 - delete a list
