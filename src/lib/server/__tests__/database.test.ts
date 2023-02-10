@@ -3,10 +3,12 @@ import * as db from '$lib/server/database';
 import { newList } from './mockData';
 import type { List } from '$lib/types';
 
-const UUID = /\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const YYYY_MM_DD = /\d{4}-\d{2}-\d{2}/;
 const HH_MM_SS_MS = /\d{2}:\d{2}:\d{2}.\d{3}/;
-const TIME_UTC_ISO_MS = /\A#{YYYY_MM_DD}T#{HH_MM_SS_MS}Z\z/;
+const TIME_UTC_ISO_MS = new RegExp(
+	`^${YYYY_MM_DD.source}T${HH_MM_SS_MS.source}Z$`
+);
 
 beforeEach(() => {
 	db.reset();
