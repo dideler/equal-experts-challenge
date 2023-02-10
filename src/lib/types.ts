@@ -1,3 +1,5 @@
+export type ListStore = { [key: string]: List };
+
 export interface List {
 	id: string;
 	title: string;

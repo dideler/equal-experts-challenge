@@ -1,13 +1,13 @@
-import type { List } from '$lib/types';
+import type { ListStore, List } from '$lib/types';
 
-let data = {};
+let data: ListStore = {};
 
-export const reset = async (newData: object = {}): Promise<void> => {
+export const reset = async (newData: ListStore = {}): Promise<void> => {
 	data = newData;
 };
 
 export const getLists = async (): Promise<List[]> => {
-	return Object.values(data);
+	return Object.values(data) as List[];
 };
 
 export const saveList = async (list: List): Promise<List> => {
