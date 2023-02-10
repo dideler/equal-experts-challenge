@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import type { ListStore, List } from '$lib/types';
 
 let data: ListStore = {};
@@ -11,6 +12,16 @@ export const getLists = async (): Promise<List[]> => {
 };
 
 export const saveList = async (list: List): Promise<List> => {
+	const currentTime = new Date().toISOString();
+	const defaults = {
+		id: randomUUID(),
+		title: '',
+		items: [],
+		created_at: currentTime,
+		updated_at: currentTime,
+	};
+	list = { ...defaults, ...list };
+	data[list.id] = list;
 	return list;
 };
 
