@@ -10,6 +10,10 @@ export const getLists = async (): Promise<List[]> => {
 	return Object.values(data);
 };
 
+export const saveList = async (list: List): Promise<List> => {
+	return list;
+};
+
 const seed = () => {
 	const lists: List[] = [
 		{

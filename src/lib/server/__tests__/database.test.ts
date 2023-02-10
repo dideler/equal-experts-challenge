@@ -22,3 +22,11 @@ describe('getLists', () => {
 	});
 });
 
+describe('saveList', () => {
+	it('returns a list', async () => {
+		const list = newList();
+
+		const res = await db.saveList(list);
+		expect(res).toEqual(list);
+	});
+});
