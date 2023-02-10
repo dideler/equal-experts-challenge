@@ -28,7 +28,7 @@ describe('getLists', () => {
 });
 
 describe('saveList', () => {
-	it('returns a list with populated id and timestamps', async () => {
+	it('returns a list with populated properties', async () => {
 		const list = { title: 'Groceries' } as List;
 
 		const res = await db.saveList(list);
@@ -40,5 +40,13 @@ describe('saveList', () => {
 			created_at: expect.stringMatching(TIME_UTC_ISO_MS),
 			updated_at: expect.stringMatching(TIME_UTC_ISO_MS),
 		});
+	});
+
+	it('stores the list by its id', async () => {
+		const list = newList();
+
+		await db.saveList(list);
+
+		expect(db.data).toMatchObject({ [list.id]: list });
 	});
 });

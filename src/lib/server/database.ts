@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import type { ListStore, List } from '$lib/types';
 
-let data: ListStore = {};
+export let data: ListStore = {};
 
 export const reset = async (newData: ListStore = {}): Promise<void> => {
 	data = newData;
