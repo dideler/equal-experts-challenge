@@ -11,6 +11,10 @@ export const getLists = async (): Promise<List[]> => {
 	return Object.values(data) as List[];
 };
 
+export const getList = async (listId: string): Promise<List | undefined> => {
+	return data[listId];
+};
+
 export const saveList = async (listData: object | List): Promise<List> => {
 	const currentTime = new Date().toISOString();
 	const defaults = {

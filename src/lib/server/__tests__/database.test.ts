@@ -29,9 +29,20 @@ describe('getLists', () => {
 	});
 });
 
-describe.todo('getList', () => {
-	it('returns the matching list when it exists');
-	it('returns undefined when it does not exist');
+describe('getList', () => {
+	it('returns the matching list when it exists', async () => {
+		const list = newList();
+
+		db.reset({ [list.id]: list });
+
+		const res = await db.getList(list.id);
+		expect(res).toEqual(list);
+	});
+
+	it('returns undefined when it does not exist', async () => {
+		const res = await db.getList('random-id');
+		expect(res).toBeUndefined();
+	});
 });
 
 describe('saveList', () => {
