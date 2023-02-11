@@ -12,9 +12,11 @@
 <h1>Lists</h1>
 
 <form method="POST">
+	<input id="input-title" type="text" name="title" placeholder="Add title" />
+	<button id="create-button" formaction="?/create">Create list</button>
 	<ul>
 		{#each data.lists as { title }}
-			<li>{title}</li>
+			<li data-testid="list-title">{title}</li>
 		{/each}
 	</ul>
 </form>

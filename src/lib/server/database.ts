@@ -11,7 +11,7 @@ export const getLists = async (): Promise<List[]> => {
 	return Object.values(data) as List[];
 };
 
-export const saveList = async (list: List): Promise<List> => {
+export const saveList = async (listData: object | List): Promise<List> => {
 	const currentTime = new Date().toISOString();
 	const defaults = {
 		id: randomUUID(),
@@ -20,7 +20,7 @@ export const saveList = async (list: List): Promise<List> => {
 		created_at: currentTime,
 		updated_at: currentTime,
 	};
-	list = { ...defaults, ...list };
+	const list: List = { ...defaults, ...listData };
 	data[list.id] = list;
 	return list;
 };
@@ -55,4 +55,4 @@ const seed = () => {
 	data = lists.reduce((acc, list) => ({ ...acc, [list.id]: list }), {});
 };
 
-if (process.env.APP_ENV !== 'prod') seed();
+if (process.env.APP_ENV === 'dev') seed();
