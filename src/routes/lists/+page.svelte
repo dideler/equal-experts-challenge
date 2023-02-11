@@ -32,8 +32,8 @@
 		Create list
 	</button>
 	<ul>
-		{#each data.lists as { title }}
-			<li data-testid="list-title">{title}</li>
+		{#each data.lists as { id, title }}
+			<li data-testid="list-title"><a href="/list/{id}">{title}</a></li>
 		{/each}
 	</ul>
 </form>

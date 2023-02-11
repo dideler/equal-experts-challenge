@@ -13,8 +13,13 @@ test('lists page can show lists and create lists', async ({ page }) => {
 	await expect.soft(page.getByText('Create list')).toBeDisabled();
 	await page.getByPlaceholder('Add title').fill('Veggies');
 	await expect.soft(page.getByText('Create list')).toBeEnabled();
+
 	await page.getByText('Create list').click();
 
 	await expect(page.getByTestId('list-title')).toHaveCount(1);
 	await expect(page.getByTestId('list-title')).toHaveText(['Veggies']);
+
+	await page.getByText('Veggies').click();
+	await page.waitForURL(/.*\/list\/.*/);
+	expect(page.url()).toContain('/list/');
 });
