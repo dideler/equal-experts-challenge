@@ -29,6 +29,11 @@ describe('getLists', () => {
 	});
 });
 
+describe.todo('getList', () => {
+	it('returns the matching list when it exists');
+	it('throws an error when it does not exist');
+});
+
 describe('saveList', () => {
 	it('returns a list with populated properties', async () => {
 		const list = { title: 'Groceries' } as List;
