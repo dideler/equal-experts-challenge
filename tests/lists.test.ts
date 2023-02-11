@@ -6,18 +6,24 @@ test('lists page can show lists and create lists', async ({ page }) => {
 	await expect.soft(page).toHaveTitle(/Lists/);
 	await expect.soft(page.locator('h1')).toContainText('Lists');
 
-	await expect(page.getByTestId('list-title')).toHaveCount(0);
+	const listTitles = page.getByTestId('list-title');
+	const addTitleInput = page.getByPlaceholder('Add title');
+	const createButton = page.getByText('Create list');
 
-	await expect.soft(page.getByText('Create list')).toBeDisabled();
-	await page.getByPlaceholder('Add title').fill('  ');
-	await expect.soft(page.getByText('Create list')).toBeDisabled();
-	await page.getByPlaceholder('Add title').fill('Veggies');
-	await expect.soft(page.getByText('Create list')).toBeEnabled();
+	await expect(listTitles).toHaveCount(0);
+	await expect.soft(addTitleInput).toHaveValue('');
+	await expect.soft(createButton).toBeDisabled();
 
-	await page.getByText('Create list').click();
+	await addTitleInput.fill('  ');
+	await expect.soft(createButton).toBeDisabled();
 
-	await expect(page.getByTestId('list-title')).toHaveCount(1);
-	await expect(page.getByTestId('list-title')).toHaveText(['Veggies']);
+	await addTitleInput.fill('Veggies');
+	await expect.soft(createButton).toBeEnabled();
+
+	await createButton.click();
+
+	await expect(listTitles).toHaveCount(1);
+	await expect(listTitles).toHaveText(['Veggies']);
 
 	await page.getByText('Veggies').click();
 	await page.waitForURL(/.*\/list\/.*/);
