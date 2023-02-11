@@ -27,5 +27,7 @@ test('lists page can show lists and create lists', async ({ page }) => {
 
 	await page.getByText('Veggies').click();
 	await page.waitForURL(/.*\/list\/.*/);
-	expect(page.url()).toContain('/list/');
+
+	const titleInput = page.locator('#input-title');
+	await expect(titleInput).toHaveValue('Veggies');
 });
