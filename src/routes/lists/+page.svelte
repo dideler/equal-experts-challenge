@@ -2,6 +2,15 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	let inputTitle = '';
+	let isValid = false;
+
+	$: if (inputTitle.trim() === '') {
+		isValid = false;
+	} else {
+		isValid = true;
+	}
 </script>
 
 <svelte:head>
@@ -12,8 +21,16 @@
 <h1>Lists</h1>
 
 <form method="POST">
-	<input id="input-title" type="text" name="title" placeholder="Add title" />
-	<button id="create-button" formaction="?/create">Create list</button>
+	<input
+		bind:value={inputTitle}
+		id="input-title"
+		type="text"
+		name="title"
+		placeholder="Add title"
+	/>
+	<button disabled={!isValid} id="create-button" formaction="?/create">
+		Create list
+	</button>
 	<ul>
 		{#each data.lists as { title }}
 			<li data-testid="list-title">{title}</li>
