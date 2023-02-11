@@ -31,7 +31,7 @@ describe('getLists', () => {
 
 describe.todo('getList', () => {
 	it('returns the matching list when it exists');
-	it('throws an error when it does not exist');
+	it('returns undefined when it does not exist');
 });
 
 describe('saveList', () => {
