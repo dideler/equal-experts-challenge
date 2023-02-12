@@ -31,3 +31,9 @@ test('lists page can show lists and create lists', async ({ page }) => {
 	const titleInput = page.locator('#input-title');
 	await expect(titleInput).toHaveValue('Veggies');
 });
+
+test('404 error page when list does not exist', async ({ page }) => {
+	const resp = await page.goto('/list/random-id');
+	expect(resp?.status()).toEqual(404);
+	await expect(page.locator('body')).toContainText(['List not found']);
+});
