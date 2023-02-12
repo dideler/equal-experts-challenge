@@ -30,6 +30,14 @@ test('lists page can show lists and create lists', async ({ page }) => {
 
 	const titleInput = page.locator('#input-title');
 	await expect(titleInput).toHaveValue('Veggies');
+
+	await titleInput.fill('Roast Veggies');
+
+	const saveButton = page.getByText('Save');
+	await saveButton.click();
+
+	await page.reload();
+	await expect(titleInput).toHaveValue('Roast Veggies');
 });
 
 test('404 error page when list does not exist', async ({ page }) => {
