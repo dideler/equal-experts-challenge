@@ -31,12 +31,18 @@ test('lists page can show lists and create lists', async ({ page }) => {
 	const titleInput = page.locator('#input-title');
 	await expect(titleInput).toHaveValue('Veggies');
 
-	await titleInput.fill('Roast Veggies');
-
 	const saveButton = page.getByText('Save list');
-	await saveButton.click();
+	await expect.soft(saveButton).toBeEnabled();
 
+	await titleInput.fill(' ');
+	await expect.soft(saveButton).toBeDisabled();
+
+	await titleInput.fill('Roast Veggies');
+	await expect.soft(saveButton).toBeEnabled();
+
+	await saveButton.click();
 	await page.reload();
+
 	await expect(titleInput).toHaveValue('Roast Veggies');
 });
 

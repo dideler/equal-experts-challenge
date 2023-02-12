@@ -2,6 +2,14 @@
 	import type { List } from '$lib/types';
 
 	export let list: List;
+
+	let isValid = false;
+
+	$: if (list.title.trim() === '') {
+		isValid = false;
+	} else {
+		isValid = true;
+	}
 </script>
 
 <form method="POST">
@@ -13,7 +21,7 @@
 		placeholder="Title"
 		bind:value={list.title}
 	/>
-	<button id="save-button" formaction="?/save">
+	<button disabled={!isValid} id="save-button" formaction="?/save">
 		Save list
 	</button>
 </form>
