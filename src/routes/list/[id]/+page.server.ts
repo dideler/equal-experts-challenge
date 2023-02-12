@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import * as db from '$lib/server/database';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad, RequestEvent } from './$types';
 
 export const load = (async ({ params }) => {
 	const list = await db.getList(params.id);
@@ -12,3 +12,11 @@ export const load = (async ({ params }) => {
 	return { list };
 }) satisfies PageServerLoad;
 
+export const actions = {
+	save: async ({ request, params }: RequestEvent) => {
+		const formData = Object.fromEntries(await request.formData());
+		let list = await db.getList(params.id);
+		list = { ...list, ...formData };
+		db.saveList(list);
+	},
+} satisfies Actions;

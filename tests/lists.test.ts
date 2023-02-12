@@ -33,7 +33,7 @@ test('lists page can show lists and create lists', async ({ page }) => {
 
 	await titleInput.fill('Roast Veggies');
 
-	const saveButton = page.getByText('Save');
+	const saveButton = page.getByText('Save list');
 	await saveButton.click();
 
 	await page.reload();
