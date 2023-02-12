@@ -16,6 +16,11 @@ export const actions = {
 	save: async ({ request, params }: RequestEvent) => {
 		const formData = Object.fromEntries(await request.formData());
 		let list = await db.getList(params.id);
+
+		if (!list) {
+			throw error(404, { message: 'List not found' });
+		}
+
 		list = { ...list, ...formData };
 		db.saveList(list);
 	},
