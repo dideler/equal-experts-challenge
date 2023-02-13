@@ -29,6 +29,12 @@ export const saveList = async (listData: object | List): Promise<List> => {
 	return list;
 };
 
+export const deleteList = async (listId: string): Promise<List | undefined> => {
+	const list = data[listId];
+	delete data[listId];
+	return list;
+};
+
 const seed = () => {
 	const lists: List[] = [
 		{

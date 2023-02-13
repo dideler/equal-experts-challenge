@@ -30,7 +30,7 @@ describe('getLists', () => {
 });
 
 describe('getList', () => {
-	it('returns the matching list when it exists', async () => {
+	it('returns the matching list', async () => {
 		const list = newList();
 
 		db.reset({ [list.id]: list });
@@ -69,8 +69,27 @@ describe('saveList', () => {
 	});
 });
 
-describe.todo('deleteList', () => {
-	it('deletes the list');
-	it('returns the deleted list when it existed');
-	it('returns undefined when the list did not exist');
+describe('deleteList', () => {
+	it('deletes the list', async () => {
+		const list = newList();
+
+		db.reset({ [list.id]: list });
+
+		await db.deleteList(list.id);
+		expect(db.data).toEqual({});
+	});
+
+	it('returns the deleted list', async () => {
+		const list = newList();
+
+		db.reset({ [list.id]: list });
+
+		const res = await db.deleteList(list.id);
+		expect(res).toEqual(list);
+	});
+
+	it('returns undefined when the list did not exist', async () => {
+		const res = await db.deleteList('random-id');
+		expect(res).toBeUndefined();
+	});
 });
