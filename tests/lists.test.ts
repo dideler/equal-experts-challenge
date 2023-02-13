@@ -46,8 +46,7 @@ test('lists page can show lists and create lists', async ({ page }) => {
 	await expect(titleInput).toHaveValue('Roast Veggies');
 });
 
-test('404 error page when list does not exist', async ({ page }) => {
-	const resp = await page.goto('/list/random-id');
-	expect(resp?.status()).toEqual(404);
+test('shows error when list does not exist', async ({ page }) => {
+	await page.goto('/list/random-id');
 	await expect(page.locator('body')).toContainText(['List not found']);
 });

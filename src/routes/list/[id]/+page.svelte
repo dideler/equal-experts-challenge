@@ -5,5 +5,13 @@
 	export let data: PageData;
 </script>
 
-<List list={data.list} />
-
+{#if !data.list}
+	<p>Something went wrong</p>
+	<ul>
+		{#each data.errors as { message }}
+			<li>{message}</li>
+		{/each}
+	</ul>
+{:else}
+	<List list={data.list} />
+{/if}
