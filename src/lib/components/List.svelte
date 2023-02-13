@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { List } from '$lib/types';
+	import { enhance } from '$app/forms';
 
 	export let list: List;
 
@@ -12,7 +13,7 @@
 	}
 </script>
 
-<form method="POST">
+<form method="POST" use:enhance>
 	<input
 		id="input-title"
 		data-testid="list-title"
