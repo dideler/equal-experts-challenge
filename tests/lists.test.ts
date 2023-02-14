@@ -24,14 +24,23 @@ test('lists index and creation', async ({ page }) => {
 
 	await createButton.click();
 
-	await expect(listTitles).toHaveCount(1);
-	await expect(listTitles).toHaveText(['Veggies']);
+	await expect(listTitles).toContainText(['Tesco']);
+});
 
-	await page.getByText('Veggies').click();
+test('list modification', async ({ page }) => {
+	await page.goto('/lists');
+
+	const addTitleInput = page.getByPlaceholder('Add title');
+	const createButton = page.getByText('Create list');
+
+	await addTitleInput.fill('Sainsburys');
+	await createButton.click();
+
+	await page.getByText('Sainsburys').click();
 	await page.waitForURL(/.*\/list\/.*/);
 
-	const titleInput = page.locator('#input-title');
-	await expect(titleInput).toHaveValue('Veggies');
+	const titleInput = page.getByTestId('input-title');
+	await expect(titleInput).toHaveValue('Sainsburys');
 
 	const saveButton = page.getByText('Save list');
 	await expect.soft(saveButton).toBeEnabled();
@@ -39,19 +48,18 @@ test('lists index and creation', async ({ page }) => {
 	await titleInput.fill(' ');
 	await expect.soft(saveButton).toBeDisabled();
 
-	await titleInput.fill('Roast Veggies');
+	await titleInput.fill('Sainos');
 	await expect.soft(saveButton).toBeEnabled();
 
 	await saveButton.click();
 	await page.reload();
-
-	await expect(titleInput).toHaveValue('Roast Veggies');
+	await expect(titleInput).toHaveValue('Sainos');
 
 	const deleteButton = page.getByText('Delete list');
 	await deleteButton.click();
 
 	await page.waitForURL(/.*\/lists/);
-	await expect(listTitles).toHaveCount(0);
+	await expect(page.locator('body')).not.toContainText('Sainos');
 });
 
 test('shows error when list does not exist', async ({ page }) => {

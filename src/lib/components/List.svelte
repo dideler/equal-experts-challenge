@@ -15,7 +15,7 @@
 <form method="POST">
 	<input
 		id="input-title"
-		data-testid="list-title"
+		data-testid="input-title"
 		type="text"
 		name="title"
 		placeholder="Title"
