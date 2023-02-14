@@ -44,6 +44,12 @@ test('lists page can show lists and create lists', async ({ page }) => {
 	await page.reload();
 
 	await expect(titleInput).toHaveValue('Roast Veggies');
+
+	const deleteButton = page.getByText('Delete list');
+	await deleteButton.click();
+
+	await page.waitForURL(/.*\/lists/);
+	await expect(listTitles).toHaveCount(0);
 });
 
 test('shows error when list does not exist', async ({ page }) => {
