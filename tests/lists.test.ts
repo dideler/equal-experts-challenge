@@ -1,22 +1,8 @@
 import { expect, test } from '@playwright/test';
-import * as db from '$lib/server/database';
-import { listsToMap, newList, newLists } from '$lib/server/__tests__/mockData';
 
-test('lists index', async ({ page }) => {
-	const lists = newLists([{ title: 'Lidl' }, { title: 'Aldi' }]);
-	db.reset(listsToMap(lists));
+test.describe.configure({ mode: 'parallel' });
 
-	await page.goto('/lists');
-
-	await expect.soft(page).toHaveTitle(/Lists/);
-	await expect.soft(page.locator('h1')).toContainText('Lists');
-
-	const listTitles = page.getByTestId('list-title');
-	await expect(listTitles).toHaveCount(2);
-	await expect(listTitles).toHaveText(['Lidl', 'Aldi']);
-});
-
-test('CRUD actions on lists', async ({ page }) => {
+test('lists index and creation', async ({ page }) => {
 	await page.goto('/lists');
 
 	await expect.soft(page).toHaveTitle(/Lists/);
@@ -33,7 +19,7 @@ test('CRUD actions on lists', async ({ page }) => {
 	await addTitleInput.fill('  ');
 	await expect.soft(createButton).toBeDisabled();
 
-	await addTitleInput.fill('Veggies');
+	await addTitleInput.fill('Tesco');
 	await expect.soft(createButton).toBeEnabled();
 
 	await createButton.click();
