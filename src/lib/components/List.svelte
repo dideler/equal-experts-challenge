@@ -24,4 +24,5 @@
 	<button disabled={!isValid} id="save-button" formaction="?/save">
 		Save list
 	</button>
+	<button id="delete-button" formaction="?/delete"> Delete list </button>
 </form>

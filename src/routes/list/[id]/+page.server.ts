@@ -25,4 +25,11 @@ export const actions = {
 		list = await db.saveList(list);
 		return { list };
 	},
+	delete: async ({ params }: RequestEvent) => {
+		const list = await db.deleteList(params.id);
+		if (!list) {
+			return fail(404, { list, error: 'List not found' });
+		}
+		return { list };
+	},
 } satisfies Actions;
