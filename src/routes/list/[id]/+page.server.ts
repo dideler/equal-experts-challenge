@@ -17,19 +17,19 @@ export const actions = {
 		let list = await db.getList(params.id);
 
 		if (!list) {
-			return fail(404, { list, error: 'List not found' });
+			return fail(404, { action: 'save', list, error: 'List not found' });
 		}
 
 		const formData = Object.fromEntries(await request.formData());
 		list = { ...list, ...formData };
 		list = await db.saveList(list);
-		return { list };
+		return { action: 'save', list };
 	},
 	delete: async ({ params }: RequestEvent) => {
 		const list = await db.deleteList(params.id);
 		if (!list) {
-			return fail(404, { list, error: 'List not found' });
+			return fail(404, { action: 'delete', list, error: 'List not found' });
 		}
-		return { list };
+		return { action: 'delete', list };
 	},
 } satisfies Actions;
