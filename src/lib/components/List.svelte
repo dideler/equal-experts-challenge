@@ -3,13 +3,7 @@
 
 	export let list: List;
 
-	let isValid = false;
-
-	$: if (list.title.trim() === '') {
-		isValid = false;
-	} else {
-		isValid = true;
-	}
+	$: isValid = title.trim() !== '';
 </script>
 
 <form method="POST">
