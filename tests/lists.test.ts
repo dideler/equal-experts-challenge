@@ -40,7 +40,9 @@ test('list modification', async ({ page }) => {
 	await page.waitForURL(/.*\/list\/.*/);
 
 	const titleInput = page.getByTestId('input-title');
+	const itemInputs = page.getByTestId('input-item');
 	await expect(titleInput).toHaveValue('Sainsburys');
+	await expect(itemInputs).toHaveText([]);
 
 	const saveButton = page.getByText('Save list');
 	await expect.soft(saveButton).toBeEnabled();
@@ -50,6 +52,9 @@ test('list modification', async ({ page }) => {
 
 	await titleInput.fill('Sainos');
 	await expect.soft(saveButton).toBeEnabled();
+
+	const newItem = page.getByPlaceholder('New item');
+	await newItem.fill('Bananas');
 
 	await saveButton.click();
 	await page.reload();

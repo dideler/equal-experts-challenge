@@ -21,6 +21,11 @@
 		placeholder="Title"
 		bind:value={list.title}
 	/>
+	<div class="new-item" data-testid="input-new-item">
+		<input type="checkbox" disabled />
+		<input type="text" placeholder="New item" />
+	</div>
+
 	<button disabled={!isValid} id="save-button" formaction="?/save">
 		Save list
 	</button>
