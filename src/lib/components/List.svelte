@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { List } from '$lib/types';
+	import type { Item } from '$lib/types';
 
-	export let list: List;
+	export let title: string;
+	export let items: Item[];
 
 	$: isValid = title.trim() !== '';
 </script>
@@ -13,7 +14,7 @@
 		type="text"
 		name="title"
 		placeholder="Title"
-		bind:value={list.title}
+		bind:value={title}
 	/>
 	<div class="new-item" data-testid="input-new-item">
 		<input type="checkbox" disabled />

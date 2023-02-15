@@ -17,5 +17,5 @@
 {:else if form?.error}
 	<p>Something went wrong: {form.error}</p>
 {:else}
-	<List list={data.list} />
+	<List {...data.list} />
 {/if}
