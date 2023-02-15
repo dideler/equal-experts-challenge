@@ -59,6 +59,7 @@ test('list modification', async ({ page }) => {
 	await saveButton.click();
 	await page.reload();
 	await expect(titleInput).toHaveValue('Sainos');
+	await expect(itemInputs).toHaveText(['Bananas']);
 
 	const deleteButton = page.getByText('Delete list');
 	await deleteButton.click();

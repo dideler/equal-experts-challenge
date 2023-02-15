@@ -16,6 +16,21 @@
 		placeholder="Title"
 		bind:value={title}
 	/>
+	{#each items as { done, desc }}
+		<div class="item" data-testid="input-item">
+			<input
+				type="checkbox"
+				role="checkbox"
+				aria-checked={done}
+				checked={done}
+			/>
+			<input
+				type="text"
+				placeholder="Item"
+				value={desc}
+			/>
+		</div>
+	{/each}
 	<div class="new-item" data-testid="input-new-item">
 		<input type="checkbox" disabled />
 		<input type="text" placeholder="New item" />
