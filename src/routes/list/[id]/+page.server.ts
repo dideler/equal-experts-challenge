@@ -1,6 +1,7 @@
 import { fail } from '@sveltejs/kit';
 import * as db from '$lib/server/database';
 import type { Actions, PageServerLoad, RequestEvent } from './$types';
+import type { Item } from '$lib/types';
 
 export const load = (async ({ params }) => {
 	const list = await db.getList(params.id);
@@ -20,8 +21,13 @@ export const actions = {
 			return fail(404, { action: 'save', list, error: 'List not found' });
 		}
 
-		const formData = Object.fromEntries(await request.formData());
-		list = { ...list, ...formData };
+		const formData = await request.formData();
+		const title = formData.get('title')?.toString();
+		const item_text = formData.get('item_text')?.toString();
+
+		if (title) list.title = title;
+		if (item_text) list.items.push({ done: false, desc: item_text } as Item);
+
 		list = await db.saveList(list);
 		return { action: 'save', list };
 	},

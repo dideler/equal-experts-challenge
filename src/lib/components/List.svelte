@@ -17,7 +17,7 @@
 		bind:value={title}
 	/>
 	{#each items as { done, desc }}
-		<div class="item" data-testid="input-item">
+		<div class="item">
 			<input
 				type="checkbox"
 				role="checkbox"
@@ -25,6 +25,7 @@
 				checked={done}
 			/>
 			<input
+				data-testid="input-item"
 				type="text"
 				placeholder="Item"
 				value={desc}

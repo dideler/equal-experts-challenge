@@ -42,7 +42,7 @@ test('list modification', async ({ page }) => {
 	const titleInput = page.getByTestId('input-title');
 	const itemInputs = page.getByTestId('input-item');
 	await expect(titleInput).toHaveValue('Sainsburys');
-	await expect(itemInputs).toHaveText([]);
+	await expect(itemInputs).toHaveCount(0);
 
 	const saveButton = page.getByText('Save list');
 	await expect.soft(saveButton).toBeEnabled();
@@ -55,11 +55,14 @@ test('list modification', async ({ page }) => {
 
 	const newItem = page.getByPlaceholder('New item');
 	await newItem.fill('Bananas');
-
 	await saveButton.click();
+	await newItem.fill('Oranges');
+	await saveButton.click();
+
 	await page.reload();
 	await expect(titleInput).toHaveValue('Sainos');
-	await expect(itemInputs).toHaveText(['Bananas']);
+	await expect(itemInputs.first()).toHaveValue('Bananas');
+	await expect(itemInputs.last()).toHaveValue('Oranges');
 
 	const deleteButton = page.getByText('Delete list');
 	await deleteButton.click();
