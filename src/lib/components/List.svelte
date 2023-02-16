@@ -19,22 +19,27 @@
 	{#each items as { done, desc }}
 		<div class="item">
 			<input
+				data-testid="input-item-check"
 				type="checkbox"
 				role="checkbox"
 				aria-checked={done}
 				checked={done}
 			/>
 			<input
-				data-testid="input-item"
+				data-testid="input-item-text"
 				type="text"
 				placeholder="Item"
 				value={desc}
 			/>
 		</div>
 	{/each}
-	<div class="new-item" data-testid="input-new-item">
-		<input type="checkbox" disabled />
-		<input type="text" placeholder="New item" />
+	<div class="new-item">
+		<input
+			type="checkbox"
+			name="item_check"
+			data-testid="input-new-item-check"
+		/>
+		<input type="text" placeholder="New item" name="item_text" />
 	</div>
 
 	<button disabled={!isValid} id="save-button" formaction="?/save">

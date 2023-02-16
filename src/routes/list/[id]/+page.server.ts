@@ -23,10 +23,16 @@ export const actions = {
 
 		const formData = await request.formData();
 		const title = formData.get('title')?.toString();
-		const item_text = formData.get('item_text')?.toString();
+		const itemText = formData.get('item_text')?.toString();
+		const itemCheck = formData.get('item_check')?.toString();
 
-		if (title) list.title = title;
-		if (item_text) list.items.push({ done: false, desc: item_text } as Item);
+		if (title) {
+			list.title = title;
+		}
+		if (itemText) {
+			const item: Item = { done: Boolean(itemCheck), desc: itemText };
+			list.items.push(item);
+		}
 
 		list = await db.saveList(list);
 		return { action: 'save', list };

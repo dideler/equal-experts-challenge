@@ -40,9 +40,12 @@ test('list modification', async ({ page }) => {
 	await page.waitForURL(/.*\/list\/.*/);
 
 	const titleInput = page.getByTestId('input-title');
-	const itemInputs = page.getByTestId('input-item');
+	const itemInputsText = page.getByTestId('input-item-text');
+	const itemInputsCheck = page.getByTestId('input-item-check');
+
 	await expect(titleInput).toHaveValue('Sainsburys');
-	await expect(itemInputs).toHaveCount(0);
+	await expect(itemInputsText).toHaveCount(0);
+	await expect(itemInputsCheck).toHaveCount(0);
 
 	const saveButton = page.getByText('Save list');
 	await expect.soft(saveButton).toBeEnabled();
@@ -53,16 +56,22 @@ test('list modification', async ({ page }) => {
 	await titleInput.fill('Sainos');
 	await expect.soft(saveButton).toBeEnabled();
 
-	const newItem = page.getByPlaceholder('New item');
-	await newItem.fill('Bananas');
+	const newItemCheck = page.getByTestId('input-new-item-check');
+	const newItemText = page.getByPlaceholder('New item');
+
+	await newItemText.fill('Bananas');
 	await saveButton.click();
-	await newItem.fill('Oranges');
+
+	await newItemText.fill('Oranges');
+	await newItemCheck.check();
 	await saveButton.click();
 
 	await page.reload();
+
 	await expect(titleInput).toHaveValue('Sainos');
-	await expect(itemInputs.first()).toHaveValue('Bananas');
-	await expect(itemInputs.last()).toHaveValue('Oranges');
+	await expect(itemInputsText.first()).toHaveValue('Bananas');
+	await expect(itemInputsText.last()).toHaveValue('Oranges');
+	await expect(itemInputsCheck.last()).toBeChecked();
 
 	const deleteButton = page.getByText('Delete list');
 	await deleteButton.click();
