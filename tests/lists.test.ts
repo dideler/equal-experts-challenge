@@ -30,6 +30,7 @@ test('lists index and creation', async ({ page }) => {
 test('list modification', async ({ page }) => {
 	await page.goto('/lists');
 
+	// Create a list by title
 	const addTitleInput = page.getByPlaceholder('Add title');
 	const createButton = page.getByText('Create list');
 
@@ -39,6 +40,7 @@ test('list modification', async ({ page }) => {
 	await page.getByText('Sainsburys').click();
 	await page.waitForURL(/.*\/list\/.*/);
 
+	// New list only has title
 	const titleInput = page.getByTestId('input-title');
 	const itemInputsText = page.getByTestId('input-item-text');
 	const itemInputsCheck = page.getByTestId('input-item-check');
@@ -47,6 +49,7 @@ test('list modification', async ({ page }) => {
 	await expect(itemInputsText).toHaveCount(0);
 	await expect(itemInputsCheck).toHaveCount(0);
 
+	// Change title
 	const saveButton = page.getByText('Save list');
 	await expect.soft(saveButton).toBeEnabled();
 
@@ -56,6 +59,7 @@ test('list modification', async ({ page }) => {
 	await titleInput.fill('Sainos');
 	await expect.soft(saveButton).toBeEnabled();
 
+	// Create items
 	const newItemCheck = page.getByTestId('input-new-item-check');
 	const newItemText = page.getByPlaceholder('New item');
 
@@ -70,9 +74,23 @@ test('list modification', async ({ page }) => {
 
 	await expect(titleInput).toHaveValue('Sainos');
 	await expect(itemInputsText.first()).toHaveValue('Bananas');
+	await expect(itemInputsCheck.first()).not.toBeChecked();
 	await expect(itemInputsText.last()).toHaveValue('Oranges');
 	await expect(itemInputsCheck.last()).toBeChecked();
 
+	// Change an item
+	await itemInputsText.first().fill('Baby bananas');
+	await itemInputsCheck.first().check();
+	await saveButton.click();
+
+	await page.reload();
+
+	await expect(itemInputsText.first()).toHaveValue('Baby bananas');
+	await expect(itemInputsCheck.first()).toBeChecked();
+
+	// TODO: Delete item
+
+	// Delete list
 	const deleteButton = page.getByText('Delete list');
 	await deleteButton.click();
 

@@ -16,10 +16,12 @@
 		placeholder="Title"
 		bind:value={title}
 	/>
-	{#each items as { done, desc }}
+	<input type="hidden" name="item-count" value={items.length} />
+	{#each items as { done, desc }, i}
 		<div class="item">
 			<input
 				data-testid="input-item-check"
+				name={`items[${i}]`}
 				type="checkbox"
 				role="checkbox"
 				aria-checked={done}
@@ -27,6 +29,7 @@
 			/>
 			<input
 				data-testid="input-item-text"
+				name={`items[${i}]`}
 				type="text"
 				placeholder="Item"
 				bind:value={desc}
@@ -36,10 +39,10 @@
 	<div class="new-item">
 		<input
 			type="checkbox"
-			name="item_check"
+			name="new-item-check"
 			data-testid="input-new-item-check"
 		/>
-		<input type="text" placeholder="New item" name="item_text" />
+		<input type="text" placeholder="New item" name="new-item-text" />
 	</div>
 
 	<button disabled={!isValid} id="save-button" formaction="?/save">

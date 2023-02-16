@@ -23,15 +23,28 @@ export const actions = {
 
 		const formData = await request.formData();
 		const title = formData.get('title')?.toString();
-		const itemText = formData.get('item_text')?.toString();
-		const itemCheck = formData.get('item_check')?.toString();
+		const itemCount = Number(formData.get('item-count'));
+		const newItemText = formData.get('new-item-text')?.toString();
+		const newItemCheck = Boolean(formData.get('new-item-check'));
 
 		if (title) {
 			list.title = title;
 		}
-		if (itemText) {
-			const item: Item = { done: Boolean(itemCheck), desc: itemText };
+
+		list.items = [];
+		for (let i = 0; i < itemCount; i++) {
+			let item: Item;
+			const values = formData.getAll(`items[${i}]`);
+			if (values.length == 2) {
+				item = { done: true, desc: String(values[1]) };
+			} else {
+				item = { done: false, desc: String(values[0]) };
+			}
 			list.items.push(item);
+		}
+
+		if (newItemText) {
+			list.items.push({ done: Boolean(newItemCheck), desc: newItemText });
 		}
 
 		list = await db.saveList(list);
