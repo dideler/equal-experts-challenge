@@ -23,13 +23,13 @@
 				type="checkbox"
 				role="checkbox"
 				aria-checked={done}
-				checked={done}
+				bind:checked={done}
 			/>
 			<input
 				data-testid="input-item-text"
 				type="text"
 				placeholder="Item"
-				value={desc}
+				bind:value={desc}
 			/>
 		</div>
 	{/each}
