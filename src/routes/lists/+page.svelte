@@ -4,13 +4,8 @@
 	export let data: PageData;
 
 	let inputTitle = '';
-	let isValid = false;
 
-	$: if (inputTitle.trim() === '') {
-		isValid = false;
-	} else {
-		isValid = true;
-	}
+	$: isValid = inputTitle.trim() !== '';
 </script>
 
 <svelte:head>
