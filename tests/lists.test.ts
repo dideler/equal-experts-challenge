@@ -88,14 +88,26 @@ test('list modification', async ({ page }) => {
 	await expect(itemsInputText.first()).toHaveValue('Baby bananas');
 	await expect(itemsInputCheck.first()).toBeChecked();
 
-	// Delete item
+	// Delete item (mouse + keyboard)
+	await expect(itemsInputText).toHaveCount(2);
+
 	const itemsButtonDelete = page.getByTestId('button-item-del');
 	await itemsButtonDelete.first().click();
-	await expect(itemsInputText.first()).not.toHaveValue('Baby bananas');
+
+	await expect(itemsInputText).toHaveCount(1);
+	await expect(itemsInputText.first()).toHaveValue('Oranges');
+
+	await itemsInputText.first().click();
+	for (let i = 0; i < ' Oranges'.length; i++) {
+		await page.keyboard.press('Backspace');
+	}
+
+	await expect(itemsInputText).toHaveCount(0);
 
 	await saveButton.click();
 	await page.reload();
-	await expect(itemsInputText.first()).toHaveValue('Oranges');
+
+	await expect(itemsInputText).toHaveCount(0);
 
 	// Delete list
 	const deleteButton = page.getByText('Delete list');

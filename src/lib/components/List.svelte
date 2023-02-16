@@ -13,6 +13,14 @@
 		items.splice(deletionIdx, 1);
 		items = items;
 	};
+
+	const onItemKeydown = (
+		{ key }: KeyboardEvent,
+		itemText: string,
+		itemIdx: number
+	) => {
+		if (itemText === '' && key == 'Backspace') removeItem(itemIdx);
+	};
 </script>
 
 <form method="POST">
@@ -64,6 +72,7 @@
 				type="text"
 				placeholder="Item"
 				bind:value={desc}
+				on:keydown={(event) => onItemKeydown(event, desc, i)}
 			/>
 			<button
 				data-testid="button-item-del"
