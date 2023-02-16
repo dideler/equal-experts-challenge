@@ -1,8 +1,11 @@
 <script lang="ts">
 	import type { Item } from '$lib/types';
 
+	export let id: string;
 	export let title: string;
 	export let items: Item[];
+	export let created_at: string;
+	export let updated_at: string;
 
 	$: isValid = title.trim() !== '';
 
@@ -13,6 +16,29 @@
 </script>
 
 <form method="POST">
+	<input
+		disabled
+		type="hidden"
+		name="id"
+		value={id}
+		aria-label="List ID"
+		aria-hidden="true"
+	/>
+	<input
+		disabled
+		type="hidden"
+		name="updated-at"
+		value={updated_at}
+		aria-label="List last saved at"
+	/>
+	<input
+		disabled
+		type="hidden"
+		name="created-at"
+		value={created_at}
+		aria-label="List created at"
+	/>
+
 	<input
 		id="input-title"
 		data-testid="input-title"
