@@ -5,6 +5,11 @@
 	export let items: Item[];
 
 	$: isValid = title.trim() !== '';
+
+	const removeItem = (deletionIdx: number) => {
+		items.splice(deletionIdx, 1);
+		items = items;
+	};
 </script>
 
 <form method="POST">
@@ -34,6 +39,11 @@
 				placeholder="Item"
 				bind:value={desc}
 			/>
+			<button
+				data-testid="button-item-del"
+				aria-label="Remove item"
+				on:click|preventDefault={() => removeItem(i)}>✕</button
+			>
 		</div>
 	{/each}
 	<div class="new-item">

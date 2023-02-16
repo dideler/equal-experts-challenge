@@ -42,12 +42,12 @@ test('list modification', async ({ page }) => {
 
 	// New list only has title
 	const titleInput = page.getByTestId('input-title');
-	const itemInputsText = page.getByTestId('input-item-text');
-	const itemInputsCheck = page.getByTestId('input-item-check');
+	const itemsInputText = page.getByTestId('input-item-text');
+	const itemsInputCheck = page.getByTestId('input-item-check');
 
 	await expect(titleInput).toHaveValue('Sainsburys');
-	await expect(itemInputsText).toHaveCount(0);
-	await expect(itemInputsCheck).toHaveCount(0);
+	await expect(itemsInputText).toHaveCount(0);
+	await expect(itemsInputCheck).toHaveCount(0);
 
 	// Change title
 	const saveButton = page.getByText('Save list');
@@ -73,22 +73,29 @@ test('list modification', async ({ page }) => {
 	await page.reload();
 
 	await expect(titleInput).toHaveValue('Sainos');
-	await expect(itemInputsText.first()).toHaveValue('Bananas');
-	await expect(itemInputsCheck.first()).not.toBeChecked();
-	await expect(itemInputsText.last()).toHaveValue('Oranges');
-	await expect(itemInputsCheck.last()).toBeChecked();
+	await expect(itemsInputText.first()).toHaveValue('Bananas');
+	await expect(itemsInputCheck.first()).not.toBeChecked();
+	await expect(itemsInputText.last()).toHaveValue('Oranges');
+	await expect(itemsInputCheck.last()).toBeChecked();
 
 	// Change an item
-	await itemInputsText.first().fill('Baby bananas');
-	await itemInputsCheck.first().check();
+	await itemsInputText.first().fill('Baby bananas');
+	await itemsInputCheck.first().check();
 	await saveButton.click();
 
 	await page.reload();
 
-	await expect(itemInputsText.first()).toHaveValue('Baby bananas');
-	await expect(itemInputsCheck.first()).toBeChecked();
+	await expect(itemsInputText.first()).toHaveValue('Baby bananas');
+	await expect(itemsInputCheck.first()).toBeChecked();
 
-	// TODO: Delete item
+	// Delete item
+	const itemsButtonDelete = page.getByTestId('button-item-del');
+	await itemsButtonDelete.first().click();
+	await expect(itemsInputText.first()).not.toHaveValue('Baby bananas');
+
+	await saveButton.click();
+	await page.reload();
+	await expect(itemsInputText.first()).toHaveValue('Oranges');
 
 	// Delete list
 	const deleteButton = page.getByText('Delete list');
