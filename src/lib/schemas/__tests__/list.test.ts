@@ -252,3 +252,16 @@ describe('listSchema', () => {
 		});
 	});
 });
+
+describe('listFormSchema', () => {
+	test('`title` is required');
+	test('`title` must be a non-empty string');
+	test('`title` is trimmed');
+
+	test('`item-count` is required');
+	test('`item-count` must be a positive integer or coercible to one');
+
+	test('`items[n]` is optional');
+	test('`items[n]` must be a string');
+	test('`items[n]` is not trimmed');
+});
