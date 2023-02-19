@@ -60,16 +60,14 @@ test('list modification', async ({ page }) => {
 	await expect.soft(saveButton).toBeEnabled();
 
 	// Create items
-	const newItemCheck = page.getByTestId('input-new-item-check');
 	const newItemText = page.getByPlaceholder('New item');
 
 	await newItemText.fill('Bananas');
-	await saveButton.click();
 
 	await newItemText.fill('Oranges');
-	await newItemCheck.check();
-	await saveButton.click();
+	await itemsInputCheck.last().check();
 
+	await saveButton.click();
 	await page.reload();
 
 	await expect(titleInput).toHaveValue('Sainos');

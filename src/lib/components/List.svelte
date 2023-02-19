@@ -7,7 +7,20 @@
 	export let created_at: string;
 	export let updated_at: string;
 
+	let newItemDesc = '';
+	let newItemAdded = false;
+
 	$: isValid = title.trim() !== '';
+
+	$: if (newItemDesc !== '') {
+		const item: Item = {
+			done: false,
+			desc: newItemDesc,
+		};
+		items.push(item);
+		newItemAdded = true;
+		newItemDesc = '';
+	}
 
 	const removeItem = (deletionIdx: number) => {
 		items.splice(deletionIdx, 1);
@@ -20,6 +33,10 @@
 		itemIdx: number
 	) => {
 		if (itemText === '' && key == 'Backspace') removeItem(itemIdx);
+	};
+
+	const onItemMount = (node: HTMLElement) => {
+		if (newItemAdded) node.focus();
 	};
 </script>
 
@@ -73,6 +90,7 @@
 				placeholder="Item"
 				bind:value={desc}
 				on:keydown={(event) => onItemKeydown(event, desc, i)}
+				use:onItemMount
 			/>
 			<button
 				data-testid="button-item-del"
@@ -82,12 +100,8 @@
 		</div>
 	{/each}
 	<div class="new-item">
-		<input
-			type="checkbox"
-			name="new-item-check"
-			data-testid="input-new-item-check"
-		/>
-		<input type="text" placeholder="New item" name="new-item-text" />
+		<input type="checkbox" name="new-item-check" disabled />
+		<input type="text" placeholder="New item" bind:value={newItemDesc} />
 	</div>
 
 	<button disabled={!isValid} id="save-button" formaction="?/save">
