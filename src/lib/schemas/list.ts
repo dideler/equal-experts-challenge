@@ -17,6 +17,22 @@ export const listSchema = z.object({
 	updated_at: z.string().datetime().default(new Date().toISOString()),
 });
 
+const formTitle = z.tuple([
+	z.string().regex(/^title$/),
+	z.string().trim().min(1),
+]);
+
+const formItemCount = z.tuple([
+	z.string().regex(/^item-count$/),
+	z.coerce.number().nonnegative().int(),
+]);
+
+const formItem = z.tuple([z.string().regex(/^items\[\d+\]$/), z.string()]);
+
+export const listFormSchema = z
+	.tuple([formTitle, formItemCount])
+	.rest(formItem.optional());
+
 export const sampleLists = (): List[] => {
 	return [
 		{

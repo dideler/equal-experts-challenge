@@ -254,14 +254,136 @@ describe('listSchema', () => {
 });
 
 describe('listFormSchema', () => {
-	test('`title` is required');
-	test('`title` must be a non-empty string');
-	test('`title` is trimmed');
+	test('`title` and `item-count` are required in that order', () => {
+		let formData: unknown[][] = [];
+		expect(() => listFormSchema.parse(formData)).toThrow();
 
-	test('`item-count` is required');
-	test('`item-count` must be a positive integer or coercible to one');
+		formData = [['title', 'Cake']];
+		expect(() => listFormSchema.parse(formData)).toThrow();
 
-	test('`items[n]` is optional');
-	test('`items[n]` must be a string');
-	test('`items[n]` is not trimmed');
+		formData = [['item-count', '0']];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['item-count', '0'],
+			['title', 'Cake'],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', undefined],
+			['item-count', '0'],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', undefined],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', '0'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+	});
+
+	test('`title` must be a non-empty string', () => {
+		let formData: unknown[][] = [
+			['title', 123],
+			['item-count', '0'],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', ''],
+			['item-count', '0'],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', '0'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+	});
+
+	test.todo('`title` is trimmed');
+
+	test('`item-count` must be a positive integer or coercible to one', () => {
+		let formData: unknown[][] = [
+			['title', 'Cake'],
+			['item-count', 'zero'],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', 2.5],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', -1],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', 0],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', '1'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+	});
+
+	test('`items[n]` is optional', () => {
+		let formData: unknown[][] = [
+			['title', 'Cake'],
+			['item-count', '0'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', '2'],
+			['items[0]', '1st item text'],
+			['items[0]', '1st item check'],
+			['items[1]', '2nd item text'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+	});
+
+	test('`items[n]` must be a string', () => {
+		let formData: unknown[][] = [
+			['title', 'Cake'],
+			['item-count', '1'],
+			['items[0]', 123],
+		];
+		expect(() => listFormSchema.parse(formData)).toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', '2'],
+			['items[0]', ''],
+			['items[1]', '2nd item text'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+
+		formData = [
+			['title', 'Cake'],
+			['item-count', '1'],
+			['items[0]', 'this item is checked'],
+			['items[0]', 'on'],
+		];
+		expect(() => listFormSchema.parse(formData)).not.toThrow();
+	});
+
+	test.todo('`items[n]` is not trimmed');
 });
