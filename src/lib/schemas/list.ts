@@ -5,7 +5,7 @@ import type { List } from '$lib/types';
 export { ZodError as ValidationError } from 'zod';
 
 export const itemSchema = z.object({
-	desc: z.string().trim().min(1),
+	desc: z.string().trim(),
 	done: z.coerce.boolean().default(false),
 });
 

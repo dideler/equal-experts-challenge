@@ -24,7 +24,7 @@ describe('itemSchema', () => {
 		expect(itemSchema.parse(data)).toMatchObject(data);
 	});
 
-	test('`desc` value must be a non-empty string', () => {
+	test('`desc` value must be a string', () => {
 		let data: object = {};
 
 		data = { desc: null };
@@ -34,10 +34,7 @@ describe('itemSchema', () => {
 		expect(() => itemSchema.parse(data)).toThrow(/(invalid_type).+(desc)/is);
 
 		data = { desc: '' };
-		expect(() => itemSchema.parse(data)).toThrow(/(too_small).+(desc)/is);
-
-		data = { desc: '  ' };
-		expect(() => itemSchema.parse(data)).toThrow(/(too_small).+(desc)/is);
+		expect(itemSchema.parse(data)).toMatchObject(data);
 
 		data = { desc: 'desc' };
 		expect(itemSchema.parse(data)).toMatchObject(data);
