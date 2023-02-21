@@ -37,6 +37,7 @@ export const actions = {
 					action: 'save',
 					list,
 					error: 'Validation failed',
+					errors: err.flatten().fieldErrors,
 				});
 			}
 
