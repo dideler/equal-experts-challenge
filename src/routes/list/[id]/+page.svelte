@@ -13,9 +13,9 @@
 </script>
 
 {#if !data.list}
-	<p>Something went wrong: {data.error}</p>
+	<p>Something went wrong on load: {data.error}</p>
 {:else if form?.error}
-	<p>Something went wrong: {form.error}</p>
+	<p>Something went wrong on submission: {form.error}</p>
 {:else}
 	<List {...data.list} />
 {/if}
