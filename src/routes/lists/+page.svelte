@@ -15,6 +15,12 @@
 
 <h1>Lists</h1>
 
+{#if data.error}
+	<p>Something went wrong on load: {data.error}</p>
+{:else if form?.error}
+	<p>Something went wrong on submission: {form.error}</p>
+{/if}
+
 <form method="POST">
 	<input
 		bind:value={inputTitle}
