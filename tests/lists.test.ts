@@ -24,6 +24,9 @@ test('lists index and creation', async ({ page }) => {
 
 	await createButton.click();
 
+	await page.waitForURL(/.*\/list\/.*/);
+	await page.goto('/lists');
+
 	await expect(listTitles).toContainText(['Tesco']);
 });
 
@@ -37,7 +40,6 @@ test('list modification', async ({ page }) => {
 	await addTitleInput.fill('Sainsburys');
 	await createButton.click();
 
-	await page.getByText('Sainsburys').click();
 	await page.waitForURL(/.*\/list\/.*/);
 
 	// New list only has title
