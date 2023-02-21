@@ -12,3 +12,11 @@ export interface Item {
 	done: boolean;
 	desc: string;
 }
+
+export type FormList = {
+	id: string;
+	created_at: string;
+	title: string;
+	items?: Array<{ done?: string; desc?: string }>;
+};
+export type FormDataRow = [string, string] | undefined;

@@ -42,7 +42,6 @@
 
 <form method="POST">
 	<input
-		disabled
 		type="hidden"
 		name="id"
 		value={id}
@@ -50,18 +49,17 @@
 		aria-hidden="true"
 	/>
 	<input
+		type="hidden"
+		name="created-at"
+		value={created_at}
+		aria-label="List created at"
+	/>
+	<input
 		disabled
 		type="hidden"
 		name="updated-at"
 		value={updated_at}
 		aria-label="List last saved at"
-	/>
-	<input
-		disabled
-		type="hidden"
-		name="created-at"
-		value={created_at}
-		aria-label="List created at"
 	/>
 
 	<input
@@ -72,7 +70,6 @@
 		placeholder="Title"
 		bind:value={title}
 	/>
-	<input type="hidden" name="item-count" value={items.length} />
 	{#each items as { done, desc }, i}
 		<div class="item">
 			<input

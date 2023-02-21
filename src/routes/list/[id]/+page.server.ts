@@ -1,7 +1,7 @@
-import { fail } from '@sveltejs/kit';
 import * as db from '$lib/server/database';
+import { formListSchema, listSchema, ValidationError } from '$lib/schemas/list';
+import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad, RequestEvent } from './$types';
-import type { Item } from '$lib/types';
 
 export const load = (async ({ params }) => {
 	const list = await db.getList(params.id);
@@ -10,7 +10,7 @@ export const load = (async ({ params }) => {
 		return { list, error: 'List not found' };
 	}
 
-	return { list };
+	return { list, error: null };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -21,40 +21,33 @@ export const actions = {
 			return fail(404, { action: 'save', list, error: 'List not found' });
 		}
 
-		const formData = await request.formData();
-		const title = formData.get('title')?.toString();
-		const itemCount = Number(formData.get('item-count'));
-		const newItemText = formData.get('new-item-text')?.toString();
-		const newItemCheck = Boolean(formData.get('new-item-check'));
+		try {
+			const formData = await request.formData();
+			const formList = formListSchema.parse(Array.from(formData));
 
-		if (title) {
-			list.title = title;
-		}
+			list = listSchema.parse(formList);
+			list = await db.saveList(list);
 
-		list.items = [];
-		for (let i = 0; i < itemCount; i++) {
-			let item: Item;
-			const values = formData.getAll(`items[${i}]`);
-			if (values.length == 2) {
-				item = { done: true, desc: String(values[1]) };
-			} else {
-				item = { done: false, desc: String(values[0]) };
+			return { action: 'save', list, error: null };
+		} catch (err) {
+			console.error('Error POST /list/:id?/save', { error: err });
+
+			if (err instanceof ValidationError) {
+				return fail(422, {
+					action: 'save',
+					list,
+					error: 'Validation failed',
+				});
 			}
-			list.items.push(item);
-		}
 
-		if (newItemText) {
-			list.items.push({ done: Boolean(newItemCheck), desc: newItemText });
+			throw error(400, 'Failed to save list');
 		}
-
-		list = await db.saveList(list);
-		return { action: 'save', list };
 	},
 	delete: async ({ params }: RequestEvent) => {
 		const list = await db.deleteList(params.id);
 		if (!list) {
 			return fail(404, { action: 'delete', list, error: 'List not found' });
 		}
-		return { action: 'delete', list };
+		return { action: 'delete', list, error: null };
 	},
 } satisfies Actions;
