@@ -85,6 +85,7 @@
 				name={`items[${i}]`}
 				type="text"
 				placeholder="Item"
+				class:done
 				bind:value={desc}
 				on:keydown={(event) => onItemKeydown(event, desc, i)}
 				use:onItemMount
@@ -106,3 +107,9 @@
 	</button>
 	<button id="delete-button" formaction="?/delete"> Delete list </button>
 </form>
+
+<style lang="postcss">
+	.done {
+		text-decoration: line-through;
+	}
+</style>
