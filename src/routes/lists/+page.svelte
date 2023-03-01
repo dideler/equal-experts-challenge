@@ -31,12 +31,11 @@
 <form method="POST">
 	<input
 		bind:value={inputTitle}
-		id="input-title"
 		type="text"
 		name="title"
 		placeholder="Add title"
 	/>
-	<button disabled={!isValid} id="create-button" formaction="?/create">
+	<button disabled={!isValid} formaction="?/create" aria-label="Create list">
 		Create list
 	</button>
 	<ul>
