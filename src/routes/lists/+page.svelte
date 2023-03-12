@@ -21,7 +21,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-base-200">
-	<h1>Lists</h1>
+	<h1 class="visually-hidden">Lists</h1>
 
 	{#if data.error}
 		<p>Something went wrong on load: {data.error}</p>
