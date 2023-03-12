@@ -10,7 +10,7 @@ test('lists index and creation', async ({ page }) => {
 
 	const listTitles = page.getByTestId('list-title');
 	const addTitleInput = page.getByPlaceholder('Add title');
-	const createButton = page.getByText('Create list');
+	const createButton = page.getByText('＋');
 
 	await expect(listTitles).toHaveCount(0);
 	await expect.soft(addTitleInput).toHaveValue('');
@@ -35,7 +35,7 @@ test('list modification', async ({ page }) => {
 
 	// Create a list by title
 	const addTitleInput = page.getByPlaceholder('Add title');
-	const createButton = page.getByText('Create list');
+	const createButton = page.getByText('＋');
 
 	await addTitleInput.fill('Sainsburys');
 	await createButton.click();
