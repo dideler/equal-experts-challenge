@@ -6,7 +6,7 @@
 				Reasons why you should use this app. Testimonials, images.
 				<br />
 				This is a fake landing page. Imagine a log in / sign up flow. A cookie stores
-				the session. If detected, redirects to your lists.
+				the session. Redirects users to their lists.
 			</p>
 			<form method="POST">
 				<button class="btn btn-primary">Get Started</button>
