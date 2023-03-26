@@ -107,9 +107,3 @@
 	</button>
 	<button id="delete-button" formaction="?/delete"> Delete list </button>
 </form>
-
-<style lang="postcss">
-	.done {
-		text-decoration: line-through;
-	}
-</style>
