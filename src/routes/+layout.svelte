@@ -10,7 +10,7 @@
 
 <slot />
 
-<footer class="footer footer-center p-10 bg-base-200 text-base-content ">
+<footer class="footer footer-center p-10 bg-base-200 text-base-content">
 	<div>
 		<a href="https://www.equalexperts.com">
 			<img alt="Equal Experts logo" src={logo} width="200" height="200" />
