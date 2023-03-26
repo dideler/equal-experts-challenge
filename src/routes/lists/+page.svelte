@@ -65,9 +65,13 @@
 						<div class="card-body">
 							<h2 class="card-title" data-testid="list-title">{title}</h2>
 							<ul>
-								{#each items as { done, desc }}
+								{#each items.slice(0, 5) as { done, desc }, i}
 									<li class:done>
-										{desc}
+										{#if i < 4}
+											{desc}
+										{:else}
+											...
+										{/if}
 									</li>
 								{/each}
 							</ul>
