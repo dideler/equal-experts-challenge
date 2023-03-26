@@ -58,10 +58,12 @@
 	</div>
 
 	<div class="container mx-auto">
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 ">
+		<div
+			class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-8"
+		>
 			{#each data.lists as { id, title, items }}
 				<a href="/list/{id}">
-					<div class="card card-compact w-96 glass">
+					<div class="card card-compact w-86 glass">
 						<div class="card-body">
 							<h2 class="card-title" data-testid="list-title">{title}</h2>
 							<ul>
