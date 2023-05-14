@@ -51,6 +51,10 @@ A basic branded grocery list app with the following functionality
 - delete items from a list
 - mark items as completed on a list
 
+## Conclusion
+
+[See discussion](https://github.com/dideler/equal-experts-challenge/discussions/3)
+
 ## Setup
 
 1. Install dependencies with `npm install`
