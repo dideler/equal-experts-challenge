@@ -1,6 +1,6 @@
 import * as db from '$lib/server/database';
 import { formListSchema, listSchema, ValidationError } from '$lib/schemas/list';
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad, RequestEvent } from './$types';
 
 export const load = (async ({ params }) => {
@@ -49,6 +49,6 @@ export const actions = {
 		if (!list) {
 			return fail(404, { action: 'delete', list, error: 'List not found' });
 		}
-		return { action: 'delete', list, error: null };
+		throw redirect(303, '/lists');
 	},
 } satisfies Actions;
